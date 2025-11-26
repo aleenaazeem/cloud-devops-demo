@@ -17,4 +17,9 @@ COPY . /app/
 # 7. Expose port 8000 (Django dev server)
 EXPOSE 8000
 # 8. Command to run the app in the container
-CMD ["python", "manage.py", "runserver","0.0.0.0:8000"]
+# Default port for local development
+ENV PORT=8000
+
+# Run Django using gunicorn in production mode
+CMD gunicorn mysite.wsgi:application --bind 0.0.0.0:${PORT}
+
